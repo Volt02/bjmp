@@ -7,7 +7,7 @@ function FrontPage() {
   return (
     <div className="front-page-bg">
       <div className="centered-content">
-        <h1 className="main-title">FOUNDATIONS</h1>
+        <h1 className="main-title">tite</h1>
         <div className="button-group">
           <button className="main-btn" onClick={() => navigate('/jail-booking-report')}>Jail Booking Report</button>
           <button className="main-btn" onClick={() => navigate('/pdl-health-record')}>PDL Health Record</button>
