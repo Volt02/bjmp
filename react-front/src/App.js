@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import './App.css';
+import JailBookingReport from './components/JailBookingReport';
+import PDLHealthRecord from './components/hr_info';
 
 function FrontPage() {
   const navigate = useNavigate();
@@ -17,21 +19,7 @@ function FrontPage() {
   );
 }
 
-function JailBookingReport() {
-  return (
-    <div className="blank-page">
-      <h2>Jail Booking Report</h2>
-    </div>
-  );
-}
 
-function PDLHealthRecord() {
-  return (
-    <div className="blank-page">
-      <h2>PDL Health Record</h2>
-    </div>
-  );
-}
 
 function App() {
   return (
