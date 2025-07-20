@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import InitialHealthAssessment from './hr_medical_history';
 import PsychiatricHistory from './hr_psychiatric_history';
 import DrugsHistory from './hr_drugs_history';
+import PhysicalExamination from './hr_physical_examination';
+import TBScreening from './hr_tb_screening';
+import TBConclusion from './hr_tb_conclusion';
 import '../css/hr_info.css';
 
 function PDLHealthRecord() {
@@ -78,6 +81,21 @@ function PDLHealthRecord() {
     return <DrugsHistory />;
   }
 
+  // If physical tab is active, render the PhysicalExamination component
+  if (activeTab === 'physical') {
+    return <PhysicalExamination />;
+  }
+
+  // If TB Screening tab is active, render the TBScreening component
+  if (activeTab === 'tb') {
+    return <TBScreening />;
+  }
+
+  // If TB Conclusion tab is active, render the TBConclusion component
+  if (activeTab === 'tb_conclusion') {
+    return <TBConclusion />;
+  }
+
   return (
     <div className="pdl-container">
       {/* Back Button */}
@@ -125,6 +143,24 @@ function PDLHealthRecord() {
           className={`tab-button ${activeTab === 'drugs' ? 'active' : 'inactive'}`}
         >
           Substance Use History
+        </button>
+        <button
+          onClick={() => setActiveTab('physical')}
+          className={`tab-button ${activeTab === 'physical' ? 'active' : 'inactive'}`}
+        >
+          Physical Exam
+        </button>
+        <button
+          onClick={() => setActiveTab('tb')}
+          className={`tab-button ${activeTab === 'tb' ? 'active' : 'inactive'}`}
+        >
+          TB Screening
+        </button>
+        <button
+          onClick={() => setActiveTab('tb_conclusion')}
+          className={`tab-button ${activeTab === 'tb_conclusion' ? 'active' : 'inactive'}`}
+        >
+          TB Conclusion
         </button>
       </div>
 

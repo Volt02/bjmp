@@ -1,6 +1,6 @@
-/* PDL Health Record Styles */
+/* TB Screening Styles */
 
-.pdl-container {
+.tb-container {
   min-height: 100vh;
   background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 50%, #EDE8F5 100%);
   padding: 20px 20px 20px 300px;
@@ -130,7 +130,7 @@
   transform: translateX(4px);
 }
 
-.form-container {
+.tb-form-container {
   max-width: 1400px;
   margin: 0 auto;
   background-color: rgba(255, 255, 255, 0.95);
@@ -141,218 +141,104 @@
   backdrop-filter: blur(20px);
 }
 
-.final-remarks-section {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 40px;
-  padding: 24px;
-  background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);
+.tb-checklist {
+  margin-bottom: 32px;
+  border: 1px solid #e8ecf5;
   border-radius: 16px;
-  border: 1px solid rgba(134, 151, 196, 0.15);
-  box-shadow: 0 4px 20px rgba(61, 82, 160, 0.05);
+  background: #f8f9ff;
+  box-shadow: 0 2px 8px rgba(61, 82, 160, 0.04);
+  padding: 24px 0 0 0;
 }
 
-.final-remarks-title {
-  color: #3D52A0;
-  margin-bottom: 20px;
-  font-weight: 600;
-  font-size: 18px;
+.tb-row {
   display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.final-remarks-accent {
-  width: 4px;
-  height: 20px;
-  background-color: #7091E6;
-  border-radius: 2px;
-}
-
-.final-remarks-options {
-  display: flex;
-  gap: 24px;
-}
-
-.remark-option {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
-  padding: 8px 12px;
-  border-radius: 8px;
-  transition: all 0.2s ease;
-  background-color: rgba(112, 145, 230, 0.05);
-}
-
-.remark-option:hover {
-  background-color: rgba(112, 145, 230, 0.1);
-}
-
-.remark-checkbox {
-  transform: scale(1.3);
-  accent-color: #3D52A0;
-}
-
-.remark-label {
-  text-transform: capitalize;
-  font-weight: 500;
-  color: #3D52A0;
+  align-items: flex-start;
+  padding: 10px 24px;
+  border-bottom: 1px solid #e8ecf5;
   font-size: 15px;
 }
 
-.confidential-notice {
-  background: linear-gradient(135deg, #3D52A0 0%, #7091E6 100%);
-  color: white;
-  padding: 14px 20px;
-  border-radius: 12px;
-  font-weight: 600;
-  font-size: 14px;
-  box-shadow: 0 4px 15px rgba(61, 82, 160, 0.3);
-  letter-spacing: 0.5px;
+.tb-row:last-child {
+  border-bottom: none;
 }
 
-.section-title {
-  color: #3D52A0;
-  padding-bottom: 12px;
-  margin-bottom: 24px;
-  font-weight: 600;
-  font-size: 20px;
+.tb-label {
+  flex: 1 1 0;
+  min-width: 0;
   display: flex;
-  align-items: center;
-  gap: 12px;
+  flex-direction: column;
 }
 
-.section-accent {
-  width: 6px;
-  height: 24px;
-  background: linear-gradient(135deg, #3D52A0 0%, #7091E6 100%);
-  border-radius: 3px;
-}
-
-.form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
-
-.name-grid {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 15px;
-}
-
-.form-field {
-  margin-bottom: 20px;
-}
-
-.form-label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: 500;
-  color: #3D52A0;
-  font-size: 15px;
-}
-
-.form-label-hint {
-  font-size: 12px;
+.tb-note {
   color: #666;
+  font-size: 13px;
+  font-style: italic;
+  margin-left: 4px;
 }
 
-.form-input {
+.tb-radio {
+  width: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.tb-radio input[type="radio"] {
+  vertical-align: baseline;
+  position: relative;
+  top: 3px;
+}
+
+.tb-input {
   width: 100%;
-  padding: 14px 16px;
+  margin-top: 6px;
+  padding: 8px 10px;
   border: 2px solid #e8ecf5;
-  border-radius: 12px;
-  font-size: 16px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-sizing: border-box;
-  background-color: #ffffff;
+  border-radius: 8px;
+  font-size: 15px;
+  background: #fff;
   color: #3D52A0;
   outline: none;
   font-weight: 400;
   box-shadow: 0 2px 8px rgba(61, 82, 160, 0.05);
+  transition: border-color 0.2s;
 }
 
-.form-input:focus {
+.tb-input:focus {
   border-color: #7091E6;
-  box-shadow: 0 4px 12px rgba(61, 82, 160, 0.1);
 }
 
-.radio-group {
+.tb-remarks-results {
   display: flex;
-  gap: 20px;
+  gap: 40px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
 }
 
-.radio-option {
+.tb-remarks, .tb-final-result {
+  flex: 1 1 300px;
+  background: #f8f9ff;
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid #e8ecf5;
+  box-shadow: 0 2px 8px rgba(61, 82, 160, 0.04);
+}
+
+.tb-checkbox-row {
   display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
 }
 
-.radio-input {
-  transform: scale(1.2);
-  accent-color: #3D52A0;
-}
-
-.place-of-birth-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
-}
-
-.photo-upload-area {
-  width: 220px;
-  height: 280px;
-  border: 2px dashed #ADBBD4;
+.tb-info-box {
+  background: #f8f9ff;
+  border: 1px solid #e8ecf5;
   border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #f8f9ff;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-.photo-upload-area:hover {
-  border-color: #7091E6;
-  background-color: #EDE8F5;
-  transform: scale(1.02);
-  box-shadow: 0 8px 25px rgba(61, 82, 160, 0.15);
-}
-
-.photo-content {
-  text-align: center;
-  color: #3D52A0;
-  position: relative;
-  z-index: 2;
-}
-
-.photo-icon {
-  font-size: 56px;
-  margin-bottom: 16px;
-  filter: drop-shadow(0 2px 4px rgba(61, 82, 160, 0.1));
-}
-
-.photo-text {
-  font-size: 16px;
-  font-weight: 500;
-  margin-bottom: 8px;
-}
-
-.photo-subtext {
-  font-size: 14px;
-  opacity: 0.7;
-}
-
-.submit-button-container {
-  text-align: center;
-  margin-top: 50px;
+  padding: 24px;
+  margin-bottom: 32px;
+  box-shadow: 0 2px 8px rgba(61, 82, 160, 0.04);
+  font-size: 15px;
 }
 
 .submit-button {
@@ -383,20 +269,18 @@
 
 /* Responsive Design */
 @media (max-width: 1200px) {
-  .form-container {
+  .tb-form-container {
     padding: 30px;
   }
 }
 
 @media (max-width: 768px) {
-  .pdl-container {
+  .tb-container {
     padding: 20px 20px 20px 20px;
   }
-  
   .back-button {
     left: 20px;
   }
-  
   .tab-navigation {
     position: fixed;
     left: -280px;
@@ -413,25 +297,20 @@
     overflow-y: auto;
     transition: left 0.3s ease;
   }
-  
   .tab-navigation.open {
     left: 0;
   }
-  
-  .form-container {
+  .tb-form-container {
     padding: 20px;
     margin: 10px;
   }
-  
   .header-card {
     padding: 15px 25px;
   }
-  
   .main-title {
     font-size: 24px;
   }
-  
   .sub-title {
     font-size: 20px;
   }
-}
+} 
