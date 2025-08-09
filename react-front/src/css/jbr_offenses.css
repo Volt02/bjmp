@@ -1,3 +1,60 @@
+/* Dynamic Offenses Rows UI */
+.jbr-offenses-dynamic-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.jbr-offenses-row {
+  display: flex;
+  gap: 20px;
+  align-items: flex-end;
+}
+
+.jbr-offenses-row-col {
+  flex: 1;
+}
+
+.jbr-offenses-delete-btn {
+  padding: 8px 12px;
+  background: #fff;
+  color: #3D52A0;
+  border: 1px solid #7091E6;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  margin-left: 8px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(61,82,160,0.05);
+  height: 40px;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+}
+.jbr-offenses-delete-btn:hover {
+  background: #f2f6ff;
+  color: #2a3878;
+  border-color: #3D52A0;
+}
+
+.jbr-offenses-add-btn {
+  width: 100%;
+  padding: 12px 0;
+  background: linear-gradient(135deg, #3D52A0 0%, #7091E6 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 16px;
+  margin-top: 8px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(61,82,160,0.10);
+  letter-spacing: 0.5px;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.jbr-offenses-add-btn:hover {
+  background: linear-gradient(135deg, #2a3878 0%, #3D52A0 100%);
+  box-shadow: 0 4px 16px rgba(61,82,160,0.15);
+}
 /* Jail Booking Report - Offenses Styles */
 
 .jbr-offenses {

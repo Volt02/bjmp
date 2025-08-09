@@ -6,16 +6,41 @@ import '../css/jbr_criminal_records.css';
 function JBRCriminalRecords({ onChange, values }) {
   const navigate = useNavigate();
   const location = useLocation();
-  const [records, setRecords] = useState(values?.records || [
-    { caseNo: '', offense: '', court: '', sentence: '', dateArrested: '', dateRelease: '', authority: '' },
-    { caseNo: '', offense: '', court: '', sentence: '', dateArrested: '', dateRelease: '', authority: '' },
-    { caseNo: '', offense: '', court: '', sentence: '', dateArrested: '', dateRelease: '', authority: '' },
-  ]);
-  const [remanded, setRemanded] = useState(values?.remanded || [
-    { letter: 'a', sc: '', br: '' },
-    { letter: 'b', sc: '', br: '' },
-    { letter: 'c', sc: '', br: '' },
-  ]);
+  const [records, setRecords] = useState(
+    values?.records && values.records.length > 0
+      ? values.records
+      : [{ caseNo: '', offense: '', court: '', sentence: '', dateArrested: '', dateRelease: '', authority: '' }]
+  );
+  const [remanded, setRemanded] = useState(
+    values?.remanded && values.remanded.length > 0
+      ? values.remanded
+      : [{ letter: 'a', sc: '', br: '' }]
+  );
+  // Add/delete logic for records
+  const addRecordRow = () => {
+    setRecords([...records, { caseNo: '', offense: '', court: '', sentence: '', dateArrested: '', dateRelease: '', authority: '' }]);
+    if (onChange) onChange({ records: [...records, { caseNo: '', offense: '', court: '', sentence: '', dateArrested: '', dateRelease: '', authority: '' }], remanded });
+  };
+  const deleteRecordRow = (idx) => {
+    if (records.length === 1) return;
+    const updated = records.filter((_, i) => i !== idx);
+    setRecords(updated);
+    if (onChange) onChange({ records: updated, remanded });
+  };
+
+  // Add/delete logic for remanded
+  const addRemandedRow = () => {
+    // Next letter: a, b, c, ...
+    const nextLetter = String.fromCharCode(97 + remanded.length);
+    setRemanded([...remanded, { letter: nextLetter, sc: '', br: '' }]);
+    if (onChange) onChange({ records, remanded: [...remanded, { letter: nextLetter, sc: '', br: '' }] });
+  };
+  const deleteRemandedRow = (idx) => {
+    if (remanded.length === 1) return;
+    const updated = remanded.filter((_, i) => i !== idx);
+    setRemanded(updated);
+    if (onChange) onChange({ records, remanded: updated });
+  };
 
   const handleRecordChange = (idx, e) => {
     const { name, value } = e.target;
@@ -70,6 +95,7 @@ function JBRCriminalRecords({ onChange, values }) {
                     <th>Date Arrested</th>
                     <th>Date Release</th>
                     <th>Authority for Release</th>
+                    <th style={{ width: '60px' }}></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -82,10 +108,28 @@ function JBRCriminalRecords({ onChange, values }) {
                       <td><input type="text" name="dateArrested" value={rec.dateArrested} onChange={e => handleRecordChange(idx, e)} className="form-input" /></td>
                       <td><input type="text" name="dateRelease" value={rec.dateRelease} onChange={e => handleRecordChange(idx, e)} className="form-input" /></td>
                       <td><input type="text" name="authority" value={rec.authority} onChange={e => handleRecordChange(idx, e)} className="form-input" /></td>
+                      <td>
+                        {records.length > 1 && (
+                          <button
+                            type="button"
+                            className="jbr-criminal-delete-btn"
+                            onClick={() => deleteRecordRow(idx)}
+                          >
+                            Delete
+                          </button>
+                        )}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
+              <button
+                type="button"
+                className="jbr-criminal-add-btn"
+                onClick={addRecordRow}
+              >
+                + Add Previous Criminal Record
+              </button>
             </div>
             <h4 className="section-title" style={{marginTop:'32px'}}><span className="section-accent"></span>Remanded to RTC</h4>
             <div className="jbr-criminal-table-container">
@@ -95,6 +139,7 @@ function JBRCriminalRecords({ onChange, values }) {
                     <th style={{width:'40px'}}> </th>
                     <th>SC-</th>
                     <th>Br</th>
+                    <th style={{ width: '60px' }}></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -103,10 +148,28 @@ function JBRCriminalRecords({ onChange, values }) {
                       <td>{row.letter}</td>
                       <td><input type="text" name="sc" value={row.sc} onChange={e => handleRemandedChange(idx, e)} className="form-input" /></td>
                       <td><input type="text" name="br" value={row.br} onChange={e => handleRemandedChange(idx, e)} className="form-input" /></td>
+                      <td>
+                        {remanded.length > 1 && (
+                          <button
+                            type="button"
+                            className="jbr-criminal-delete-btn"
+                            onClick={() => deleteRemandedRow(idx)}
+                          >
+                            Delete
+                          </button>
+                        )}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
+              <button
+                type="button"
+                className="jbr-criminal-add-btn"
+                onClick={addRemandedRow}
+              >
+                + Add Remanded to RTC
+              </button>
             </div>
             <div className="submit-button-container">
               <button type="submit" className="submit-button">
