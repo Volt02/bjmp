@@ -1,177 +1,57 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import PDLHealthRecord from './hr_info';
-import InitialHealthAssessment from './hr_medical_history';
-import PsychiatricHistory from './hr_psychiatric_history';
-import PhysicalExamination from './hr_physical_examination';
-import TBScreening from './hr_tb_screening';
-import TBConclusion from './hr_tb_conclusion';
+
+
+
+
+import React from 'react';
 import '../css/hr_drugs_history.css';
 
-function DrugsHistory() {
-  const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState('drugs'); // 'basic', 'assessment', 'psychiatric', or 'drugs'
-  const [formData, setFormData] = useState({
-    // Alcohol History
+
+function DrugsHistory({ values = {}, onChange }) {
+  const defaultFormData = {
     alcoholDrinker: '',
     alcoholAgeAtOnset: '',
     alcoholFrequencyPerWeek: '',
     alcoholVolumeConsumed: '',
     alcoholTypeOfDrinks: '',
-    
-    // Smoking History
     smokingStatus: '',
     smokingAgeAtOnset: '',
     cigarettesPerDay: '',
-    
-    // Drugs History
     useOfIllicitDrugs: '',
     drugsAgeAtOnset: '',
     injectingDrugs: '',
     multipleDrugsAtOnce: '',
-    
-    // Drug Use Table
-    primaryUse: {
-      frequency: '',
-      lastIntake: ''
-    },
-    secondaryUse: {
-      frequency: '',
-      lastIntake: ''
-    },
-    otherUse: {
-      frequency: '',
-      lastIntake: ''
-    }
-  });
+    primaryUse: { frequency: '', lastIntake: '' },
+    secondaryUse: { frequency: '', lastIntake: '' },
+    otherUse: { frequency: '', lastIntake: '' }
+  };
+  const formData = { ...defaultFormData, ...values };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    const updated = { ...formData, [name]: value };
+    onChange && onChange(updated);
   };
 
   const handleDrugUseChange = (drugType, field, value) => {
-    setFormData(prev => ({
-      ...prev,
+    const updated = {
+      ...formData,
       [drugType]: {
-        ...prev[drugType],
+        ...formData[drugType],
         [field]: value
       }
-    }));
+    };
+    onChange && onChange(updated);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Drugs History submitted:', formData);
-    // Here you would typically send the data to your backend
+    // Let wizard handle submit
   };
 
-  // If basic tab is active, render the PDLHealthRecord component
-  if (activeTab === 'basic') {
-    return <PDLHealthRecord />;
-  }
-
-  // If assessment tab is active, render the InitialHealthAssessment component
-  if (activeTab === 'assessment') {
-    return <InitialHealthAssessment />;
-  }
-
-  // If psychiatric tab is active, render the PsychiatricHistory component
-  if (activeTab === 'psychiatric') {
-    return <PsychiatricHistory />;
-  }
-
-  // If physical tab is active, render the PhysicalExamination component
-  if (activeTab === 'physical') {
-    return <PhysicalExamination />;
-  }
-
-  // If TB Screening tab is active, render the TBScreening component
-  if (activeTab === 'tb') {
-    return <TBScreening />;
-  }
-
-  // If TB Conclusion tab is active, render the TBConclusion component
-  if (activeTab === 'tb_conclusion') {
-    return <TBConclusion />;
-  }
-
   return (
-    <div className="drugs-container">
-      {/* Back Button */}
-      <button 
-        onClick={() => navigate('/')}
-        className="back-button"
-      >
-        ← Back
-      </button>
-
-      {/* Header */}
-      <div className="header-container">
-        <div className="header-card">
-          <h1 className="main-title">
-            BUREAU OF JAIL MANAGEMENT AND PENOLOGY
-          </h1>
-          <h2 className="sub-title">
-            PDL HEALTH RECORD
-          </h2>
-        </div>
-      </div>
-
-      {/* Tab Navigation */}
-      <div className="tab-navigation">
-        <button
-          onClick={() => setActiveTab('basic')}
-          className={`tab-button ${activeTab === 'basic' ? 'active' : 'inactive'}`}
-        >
-          PDL Information
-        </button>
-        <button
-          onClick={() => setActiveTab('assessment')}
-          className={`tab-button ${activeTab === 'assessment' ? 'active' : 'inactive'}`}
-        >
-          Medical History
-        </button>
-        <button
-          onClick={() => setActiveTab('psychiatric')}
-          className={`tab-button ${activeTab === 'psychiatric' ? 'active' : 'inactive'}`}
-        >
-          Psychiatric History
-        </button>
-        <button
-          onClick={() => setActiveTab('drugs')}
-          className={`tab-button ${activeTab === 'drugs' ? 'active' : 'inactive'}`}
-        >
-          Substance Use History
-        </button>
-        <button
-          onClick={() => setActiveTab('physical')}
-          className={`tab-button ${activeTab === 'physical' ? 'active' : 'inactive'}`}
-        >
-          Physical Exam
-        </button>
-        <button
-          onClick={() => setActiveTab('tb')}
-          className={`tab-button ${activeTab === 'tb' ? 'active' : 'inactive'}`}
-        >
-          TB Screening
-        </button>
-        <button
-          onClick={() => setActiveTab('tb_conclusion')}
-          className={`tab-button ${activeTab === 'tb_conclusion' ? 'active' : 'inactive'}`}
-        >
-          TB Conclusion
-        </button>
-      </div>
-
-      {/* Main Form Container */}
-      <div className="drugs-form-container">
-        <form onSubmit={handleSubmit}>
+    <div className="form-container">
+      <form onSubmit={handleSubmit} autoComplete="off">
           <div className="drugs-grid">
-            
             {/* Left Column - Alcohol and Smoking */}
             <div>
               {/* Alcohol History */}
@@ -195,7 +75,6 @@ function DrugsHistory() {
                   }}></div>
                   ALCOHOL HISTORY
                 </h3>
-                
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                   {/* Alcohol Drinker */}
                   <div>
@@ -229,7 +108,6 @@ function DrugsHistory() {
                       ))}
                     </div>
                   </div>
-
                   {/* Age at onset */}
                   <div>
                     <label style={{
@@ -250,7 +128,6 @@ function DrugsHistory() {
                       placeholder="Enter age"
                     />
                   </div>
-
                   {/* Frequency per week */}
                   <div>
                     <label style={{
@@ -271,7 +148,6 @@ function DrugsHistory() {
                       placeholder="e.g., 3 times per week"
                     />
                   </div>
-
                   {/* Volume consumed */}
                   <div>
                     <label style={{
@@ -295,7 +171,6 @@ function DrugsHistory() {
                       (bottle, glass, shots, etc.)
                     </div>
                   </div>
-
                   {/* Type of drinks */}
                   <div>
                     <label style={{
@@ -318,7 +193,6 @@ function DrugsHistory() {
                   </div>
                 </div>
               </div>
-
               {/* Smoking History */}
               <div style={{ marginBottom: '30px' }}>
                 <h3 style={{
@@ -340,7 +214,6 @@ function DrugsHistory() {
                   }}></div>
                   SMOKING (Tobacco/Cigarette/Vape)
                 </h3>
-                
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                   {/* Smoking Status */}
                   <div>
@@ -380,7 +253,6 @@ function DrugsHistory() {
                       ))}
                     </div>
                   </div>
-
                   {/* Age at onset */}
                   <div>
                     <label style={{
@@ -401,7 +273,6 @@ function DrugsHistory() {
                       placeholder="Enter age"
                     />
                   </div>
-
                   {/* Cigarettes per day */}
                   <div>
                     <label style={{
@@ -425,7 +296,6 @@ function DrugsHistory() {
                 </div>
               </div>
             </div>
-
             {/* Right Column - Drugs */}
             <div>
               {/* Drugs History */}
@@ -449,7 +319,6 @@ function DrugsHistory() {
                   }}></div>
                   DRUGS
                 </h3>
-                
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                   {/* Use of illicit drugs */}
                   <div>
@@ -483,7 +352,6 @@ function DrugsHistory() {
                       ))}
                     </div>
                   </div>
-
                   {/* Age at onset */}
                   <div>
                     <label style={{
@@ -504,7 +372,6 @@ function DrugsHistory() {
                       placeholder="Enter age"
                     />
                   </div>
-
                   {/* Injecting drugs */}
                   <div>
                     <label style={{
@@ -537,7 +404,6 @@ function DrugsHistory() {
                       ))}
                     </div>
                   </div>
-
                   {/* Multiple drugs */}
                   <div>
                     <label style={{
@@ -570,7 +436,6 @@ function DrugsHistory() {
                       ))}
                     </div>
                   </div>
-
                   {/* Drug Use Table */}
                   <div>
                     <h4 style={{
@@ -617,7 +482,6 @@ function DrugsHistory() {
                           Last Intake
                         </div>
                       </div>
-
                       {/* Table Rows */}
                       {[
                         { key: 'primaryUse', label: 'Primary use' },
@@ -668,41 +532,9 @@ function DrugsHistory() {
             </div>
           </div>
 
-          {/* Submit Button */}
-          <div style={{ textAlign: 'center', marginTop: '50px' }}>
-            <button
-              type="submit"
-              style={{
-                padding: '18px 48px',
-                background: 'linear-gradient(135deg, #3D52A0 0%, #7091E6 100%)',
-                color: 'white',
-                border: 'none',
-                borderRadius: '16px',
-                fontSize: '18px',
-                fontWeight: '600',
-                cursor: 'pointer',
-                boxShadow: '0 8px 25px rgba(61, 82, 160, 0.3)',
-                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                letterSpacing: '0.5px',
-                position: 'relative',
-                overflow: 'hidden'
-              }}
-              onMouseOver={(e) => {
-                e.target.style.transform = 'translateY(-2px)';
-                e.target.style.boxShadow = '0 12px 35px rgba(61, 82, 160, 0.4)';
-              }}
-              onMouseOut={(e) => {
-                e.target.style.transform = 'translateY(0)';
-                e.target.style.boxShadow = '0 8px 25px rgba(61, 82, 160, 0.3)';
-              }}
-            >
-              <span style={{ position: 'relative', zIndex: '2' }}>Save Substance Use History</span>
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+    </form>
+  </div>
   );
 }
 
-export default DrugsHistory; 
+export default DrugsHistory;

@@ -1,90 +1,62 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import PDLHealthRecord from './hr_info';
-import InitialHealthAssessment from './hr_medical_history';
-import PsychiatricHistory from './hr_psychiatric_history';
-import DrugsHistory from './hr_drugs_history';
-import PhysicalExamination from './hr_physical_examination';
-import TBScreening from './hr_tb_screening';
+import React from 'react';
 import '../css/hr_tb_conclusion.css';
 
-function TBConclusion() {
-  const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState('tb_conclusion');
-  const [conclusion, setConclusion] = useState(false);
-  const [furtherExam, setFurtherExam] = useState({
+
+function TBConclusion({ values = {}, onChange }) {
+  const defaultFurtherExam = {
     sbirt: false,
     philpen: false,
     neuro: false,
     allegation: false
-  });
-  const [findings, setFindings] = useState({
+  };
+  const defaultFindings = {
     noInjury: false,
     noMarkings: false
-  });
-  const [impressions, setImpressions] = useState(['', '', '']);
-  const [recommendation, setRecommendation] = useState({
+  };
+  const defaultImpressions = ['', '', ''];
+  const defaultRecommendation = {
     dorm: false,
     isolated: false,
     hospitalized: false
-  });
-  const [signature, setSignature] = useState('');
+  };
+  const conclusion = values.conclusion || false;
+  const furtherExam = { ...defaultFurtherExam, ...(values.furtherExam || {}) };
+  const findings = { ...defaultFindings, ...(values.findings || {}) };
+  const impressions = values.impressions || defaultImpressions;
+  const recommendation = { ...defaultRecommendation, ...(values.recommendation || {}) };
+  const signature = values.signature || '';
 
   const handleFurtherExam = (key, value) => {
-    setFurtherExam(prev => ({ ...prev, [key]: value }));
+    onChange && onChange({ ...values, furtherExam: { ...furtherExam, [key]: value } });
   };
   const handleFindings = (key, value) => {
-    setFindings(prev => ({ ...prev, [key]: value }));
+    onChange && onChange({ ...values, findings: { ...findings, [key]: value } });
   };
   const handleImpression = (idx, value) => {
-    setImpressions(prev => prev.map((v, i) => i === idx ? value : v));
+    const updated = impressions.map((v, i) => i === idx ? value : v);
+    onChange && onChange({ ...values, impressions: updated });
   };
   const handleRecommendation = (key, value) => {
-    setRecommendation(prev => ({ ...prev, [key]: value }));
+    onChange && onChange({ ...values, recommendation: { ...recommendation, [key]: value } });
   };
-
-  // Tab navigation logic
-  if (activeTab === 'basic') return <PDLHealthRecord />;
-  if (activeTab === 'assessment') return <InitialHealthAssessment />;
-  if (activeTab === 'psychiatric') return <PsychiatricHistory />;
-  if (activeTab === 'drugs') return <DrugsHistory />;
-  if (activeTab === 'physical') return <PhysicalExamination />;
-  if (activeTab === 'tb') return <TBScreening />;
+  const handleSignature = (e) => {
+    onChange && onChange({ ...values, signature: e.target.value });
+  };
+  const handleConclusion = (e) => {
+    onChange && onChange({ ...values, conclusion: e.target.checked });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Submit logic here
-    console.log({ conclusion, furtherExam, findings, impressions, recommendation, signature });
+    // Let wizard handle submit
   };
 
   return (
-    <div className="tb-conclusion-container">
-      {/* Back Button */}
-      <button onClick={() => navigate('/')} className="back-button">← Back</button>
-
-      {/* Header */}
-      <div className="header-container">
-        <div className="header-card">
-          <h1 className="main-title">BUREAU OF JAIL MANAGEMENT AND PENOLOGY</h1>
-          <h2 className="sub-title">PDL HEALTH RECORD</h2>
-        </div>
-      </div>
-
-      {/* Tab Navigation */}
-      <div className="tab-navigation">
-        <button onClick={() => setActiveTab('basic')} className={`tab-button ${activeTab === 'basic' ? 'active' : 'inactive'}`}>PDL Information</button>
-        <button onClick={() => setActiveTab('assessment')} className={`tab-button ${activeTab === 'assessment' ? 'active' : 'inactive'}`}>Medical History</button>
-        <button onClick={() => setActiveTab('psychiatric')} className={`tab-button ${activeTab === 'psychiatric' ? 'active' : 'inactive'}`}>Psychiatric History</button>
-        <button onClick={() => setActiveTab('drugs')} className={`tab-button ${activeTab === 'drugs' ? 'active' : 'inactive'}`}>Substance Use History</button>
-        <button onClick={() => setActiveTab('physical')} className={`tab-button ${activeTab === 'physical' ? 'active' : 'inactive'}`}>Physical Exam</button>
-        <button onClick={() => setActiveTab('tb')} className={`tab-button ${activeTab === 'tb' ? 'active' : 'inactive'}`}>TB Screening</button>
-        <button onClick={() => setActiveTab('tb_conclusion')} className={`tab-button ${activeTab === 'tb_conclusion' ? 'active' : 'inactive'}`}>TB Conclusion</button>
-      </div>
-
-      {/* Main Form */}
-      <div className="tb-conclusion-form-container">
-        <form onSubmit={handleSubmit}>
-          <div className="tb-conclusion-body">
+    <div className="form-container">
+      <form onSubmit={handleSubmit} autoComplete="off">
+        {/* Header (keep only one instance) */}
+        {/* The header is rendered by the wizard, so remove it here */}
+        <div className="tb-conclusion-body">
             <div className="tb-conclusion-figure">
               {/* Placeholder for body figure images */}
               <div className="tb-figure-imgs">
@@ -96,13 +68,13 @@ function TBConclusion() {
                 <label><input type="checkbox" checked={findings.noMarkings} onChange={e => handleFindings('noMarkings', e.target.checked)} /> No skin markings or unusual piercings</label>
                 <div className="tb-signature-row">
                   <label>Signature of PDL:</label>
-                  <input type="text" className="tb-signature-input" value={signature} onChange={e => setSignature(e.target.value)} />
+                  <input type="text" className="tb-signature-input" value={signature} onChange={handleSignature} />
                 </div>
               </div>
             </div>
             <div className="tb-conclusion-details">
               <div className="tb-conclusion-section">
-                <label><input type="checkbox" checked={conclusion} onChange={e => setConclusion(e.target.checked)} /> Practically healthy</label>
+                <label><input type="checkbox" checked={conclusion} onChange={handleConclusion} /> Practically healthy</label>
               </div>
               <div className="tb-conclusion-section">
                 <label>For further examination/evaluation:</label>
@@ -129,15 +101,9 @@ function TBConclusion() {
               </div>
             </div>
           </div>
-          {/* Submit Button */}
-          <div style={{ textAlign: 'center', marginTop: '40px' }}>
-            <button type="submit" className="submit-button">
-              <span className="submit-button-text">Save TB Conclusion</span>
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+
+    </form>
+  </div>
   );
 }
 

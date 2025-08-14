@@ -1,3 +1,26 @@
+/* Next button style for wizard */
+.next-button {
+  padding: 18px 48px;
+  background: linear-gradient(135deg, #3D52A0 0%, #7091E6 100%);
+  color: white;
+  border: none;
+  border-radius: 16px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(61, 82, 160, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+  margin-left: 16px;
+}
+
+.next-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 35px rgba(61, 82, 160, 0.4);
+  background: linear-gradient(135deg, #7091E6 0%, #3D52A0 100%);
+}
 /* Sidebar style matches jbr_criminal_records.css */
 .jbr-info-sidebar {
   position: fixed;
@@ -80,9 +103,6 @@
 }
 
 .back-button {
-  position: absolute;
-  top: 24px;
-  left: 300px;
   padding: 14px 20px;
   background-color: rgba(61, 82, 160, 0.9);
   color: white;

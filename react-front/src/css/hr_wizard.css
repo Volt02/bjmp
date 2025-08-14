@@ -1,0 +1,57 @@
+.hr-wizard-sidebar {
+  width: 260px;
+  background: linear-gradient(180deg, #5a7bdc 0%, #3d52a0 100%);
+  color: #fff;
+  padding-top: 32px;
+  box-shadow: 2px 0 16px rgba(61,82,160,0.08);
+}
+.tab-button {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 18px;
+  padding: 18px 24px;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 12px 0 0 12px;
+  margin-bottom: 8px;
+  transition: background 0.2s, color 0.2s;
+}
+.tab-button.active {
+  background: #fff;
+  color: #3d52a0;
+  font-weight: bold;
+  box-shadow: 0 4px 16px rgba(61,82,160,0.10);
+}
+.hrwizard-back-btn {
+  background: #fff;
+  color: #3d52a0;
+  font-weight: 600;
+  border-radius: 12px;
+  padding: 10px 28px;
+  font-size: 18px;
+  border: none;
+  box-shadow: 0 8px 25px rgba(61, 82, 160, 0.2);
+  transition: background 0.2s, color 0.2s;
+}
+.hrwizard-back-btn:hover {
+  background: #e3e9f7;
+  color: #2a386b;
+}
+.next-button, .submit-button {
+  background: linear-gradient(90deg, #7091E6 0%, #3D52A0 100%);
+  color: white;
+  font-weight: 700;
+  border-radius: 14px;
+  padding: 18px 40px;
+  font-size: 18px;
+  border: none;
+  box-shadow: 0 4px 16px rgba(61,82,160,0.18);
+  cursor: pointer;
+  margin-left: 16px;
+  letter-spacing: 1px;
+  transition: background 0.2s, color 0.2s;
+}
+.next-button:hover, .submit-button:hover {
+  background: #3d52a0;
+}

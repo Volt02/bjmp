@@ -1,17 +1,10 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import PDLHealthRecord from './hr_info';
-import InitialHealthAssessment from './hr_medical_history';
-import PsychiatricHistory from './hr_psychiatric_history';
-import DrugsHistory from './hr_drugs_history';
-import PhysicalExamination from './hr_physical_examination';
-import TBConclusion from './hr_tb_conclusion';
+import React from 'react';
 import '../css/hr_tb_screening.css';
 
-function TBScreening() {
-  const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState('tb');
-  const [checklist, setChecklist] = useState({
+
+function TBScreening({ values = {}, onChange }) {
+  // Destructure or default the values for each section
+  const checklist = values.checklist || {
     A: null,
     B: null,
     B_known: null,
@@ -21,86 +14,64 @@ function TBScreening() {
     D: null,
     E: null,
     F: null,
-  });
-  const [remarks, setRemarks] = useState({
+  };
+  const remarks = values.remarks || {
     presumptiveTB: false,
     presumptiveDRTB: false,
     notTB: false,
     ongoing: false,
     other: false,
     otherText: ''
-  });
-  const [finalResult, setFinalResult] = useState({
+  };
+  const finalResult = values.finalResult || {
     newCase: false,
     retreatment: false,
     negative: false,
     bc: false,
     cd: false
-  });
-  const [knownMedical] = useState('');
-  const [tbOutcome, setTbOutcome] = useState('');
-  const [tbExposure, setTbExposure] = useState('');
+  };
+  const tbOutcome = values.tbOutcome || '';
+  const tbExposure = values.tbExposure || '';
 
+  // Handlers update the parent wizard state
   const handleChecklist = (key, value) => {
-    setChecklist(prev => ({ ...prev, [key]: value }));
+    onChange && onChange({
+      ...values,
+      checklist: { ...checklist, [key]: value }
+    });
   };
-
   const handleRemarks = (key, value) => {
-    setRemarks(prev => ({ ...prev, [key]: value }));
+    onChange && onChange({
+      ...values,
+      remarks: { ...remarks, [key]: value }
+    });
   };
-
   const handleFinalResult = (key, value) => {
-    setFinalResult(prev => ({ ...prev, [key]: value }));
+    onChange && onChange({
+      ...values,
+      finalResult: { ...finalResult, [key]: value }
+    });
   };
-
+  const handleTbOutcome = (val) => {
+    onChange && onChange({
+      ...values,
+      tbOutcome: val
+    });
+  };
+  const handleTbExposure = (val) => {
+    onChange && onChange({
+      ...values,
+      tbExposure: val
+    });
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Submit logic here
-    console.log({ checklist, remarks, finalResult, knownMedical, tbOutcome, tbExposure });
+    // Let wizard handle submit
   };
 
-  // Tab navigation logic
-  if (activeTab === 'basic') return <PDLHealthRecord />;
-  if (activeTab === 'assessment') return <InitialHealthAssessment />;
-  if (activeTab === 'psychiatric') return <PsychiatricHistory />;
-  if (activeTab === 'drugs') return <DrugsHistory />;
-  if (activeTab === 'physical') return <PhysicalExamination />;
-  if (activeTab === 'tb_conclusion') {
-    return <TBConclusion />;
-  }
-
   return (
-    <div className="tb-container">
-      {/* Back Button */}
-      <button onClick={() => navigate('/')} className="back-button">← Back</button>
-
-      {/* Header */}
-      <div className="header-container">
-        <div className="header-card">
-          <h1 className="main-title">BUREAU OF JAIL MANAGEMENT AND PENOLOGY</h1>
-          <h2 className="sub-title">PDL HEALTH RECORD</h2>
-        </div>
-      </div>
-
-      {/* Tab Navigation */}
-      <div className="tab-navigation">
-        <button onClick={() => setActiveTab('basic')} className={`tab-button ${activeTab === 'basic' ? 'active' : 'inactive'}`}>PDL Information</button>
-        <button onClick={() => setActiveTab('assessment')} className={`tab-button ${activeTab === 'assessment' ? 'active' : 'inactive'}`}>Medical History</button>
-        <button onClick={() => setActiveTab('psychiatric')} className={`tab-button ${activeTab === 'psychiatric' ? 'active' : 'inactive'}`}>Psychiatric History</button>
-        <button onClick={() => setActiveTab('drugs')} className={`tab-button ${activeTab === 'drugs' ? 'active' : 'inactive'}`}>Substance Use History</button>
-        <button onClick={() => setActiveTab('physical')} className={`tab-button ${activeTab === 'physical' ? 'active' : 'inactive'}`}>Physical Exam</button>
-        <button onClick={() => setActiveTab('tb')} className={`tab-button ${activeTab === 'tb' ? 'active' : 'inactive'}`}>TB Screening</button>
-        <button
-          onClick={() => setActiveTab('tb_conclusion')}
-          className={`tab-button ${activeTab === 'tb_conclusion' ? 'active' : 'inactive'}`}
-        >
-          TB Conclusion
-        </button>
-      </div>
-
-      {/* Main Form */}
-      <div className="tb-form-container">
-        <form onSubmit={handleSubmit}>
+    <div className="form-container">
+      <form onSubmit={handleSubmit} autoComplete="off">
           <div className="tb-checklist">
             {/* Checklist Items */}
             <div className="tb-row">
@@ -122,29 +93,18 @@ function TBScreening() {
               <div className="tb-label">C. Blood-streaked sputum</div>
               <div className="tb-radio"><input type="radio" name="C_blood" checked={checklist.C_blood === true} onChange={() => handleChecklist('C_blood', true)} /></div>
               <div className="tb-radio"><input type="radio" name="C_blood" checked={checklist.C_blood === false} onChange={() => handleChecklist('C_blood', false)} /></div>
-            </div>
-            <div className="tb-row">
-              <div className="tb-label">Weight loss or BMI {'<'} 18.5</div>
-              <div className="tb-radio"><input type="radio" name="C_weight" checked={checklist.C_weight === true} onChange={() => handleChecklist('C_weight', true)} /></div>
-              <div className="tb-radio"><input type="radio" name="C_weight" checked={checklist.C_weight === false} onChange={() => handleChecklist('C_weight', false)} /></div>
-            </div>
-            <div className="tb-row">
-              <div className="tb-label">Persistent fever</div>
-              <div className="tb-radio"><input type="radio" name="C_fever" checked={checklist.C_fever === true} onChange={() => handleChecklist('C_fever', true)} /></div>
               <div className="tb-radio"><input type="radio" name="C_fever" checked={checklist.C_fever === false} onChange={() => handleChecklist('C_fever', false)} /></div>
             </div>
             <div className="tb-row">
-              <div className="tb-label">D. Chest x-ray suggestive of TB</div>
-              <div className="tb-radio"><input type="radio" name="D" checked={checklist.D === true} onChange={() => handleChecklist('D', true)} /></div>
               <div className="tb-radio"><input type="radio" name="D" checked={checklist.D === false} onChange={() => handleChecklist('D', false)} /></div>
             </div>
             <div className="tb-row">
-              <div className="tb-label">E. History of previous TB treatment<br /><input type="text" className="tb-input" placeholder="If outcome known, specify" value={tbOutcome} onChange={e => setTbOutcome(e.target.value)} /></div>
+              <div className="tb-label">E. History of previous TB treatment<br /><input type="text" className="tb-input" placeholder="If outcome known, specify" value={tbOutcome} onChange={e => handleTbOutcome(e.target.value)} /></div>
               <div className="tb-radio"><input type="radio" name="E" checked={checklist.E === true} onChange={() => handleChecklist('E', true)} /></div>
               <div className="tb-radio"><input type="radio" name="E" checked={checklist.E === false} onChange={() => handleChecklist('E', false)} /></div>
             </div>
             <div className="tb-row">
-              <div className="tb-label">F. Exposure to TB case<br /><input type="text" className="tb-input" placeholder="If known, specify" value={tbExposure} onChange={e => setTbExposure(e.target.value)} /></div>
+              <div className="tb-label">F. Exposure to TB case<br /><input type="text" className="tb-input" placeholder="If known, specify" value={tbExposure} onChange={e => handleTbExposure(e.target.value)} /></div>
               <div className="tb-radio"><input type="radio" name="F" checked={checklist.F === true} onChange={() => handleChecklist('F', true)} /></div>
               <div className="tb-radio"><input type="radio" name="F" checked={checklist.F === false} onChange={() => handleChecklist('F', false)} /></div>
             </div>
@@ -190,15 +150,9 @@ function TBScreening() {
             </ul>
           </div>
 
-          {/* Submit Button */}
-          <div style={{ textAlign: 'center', marginTop: '40px' }}>
-            <button type="submit" className="submit-button">
-              <span className="submit-button-text">Save TB Screening</span>
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+
+    </form>
+  </div>
   );
 }
 
