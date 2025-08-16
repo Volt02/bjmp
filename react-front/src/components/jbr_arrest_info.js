@@ -19,7 +19,7 @@ function JBRArrestInfo({ values = {}, onChange }) {
         </div>
         <div>
           <label className="form-label">Time and Date of Arrest</label>
-          <input type="text" name="timeDateOfArrest" value={formData.timeDateOfArrest || ''} onChange={handleInputChange} className="form-input" />
+          <input type="datetime-local" name="timeDateOfArrest" value={formData.timeDateOfArrest || ''} onChange={handleInputChange} className="form-input" />
         </div>
         <div>
           <label className="form-label">Arresting Officer/Unit</label>
@@ -31,7 +31,7 @@ function JBRArrestInfo({ values = {}, onChange }) {
         </div>
         <div style={{ gridColumn: '1 / -1' }}>
           <label className="form-label">Time and Date Received for Confinement</label>
-          <input type="text" name="timeDateReceived" value={formData.timeDateReceived || ''} onChange={handleInputChange} className="form-input" />
+          <input type="datetime-local" name="timeDateReceived" value={formData.timeDateReceived || ''} onChange={handleInputChange} className="form-input" />
         </div>
       </div>
     </div>

@@ -64,8 +64,8 @@ function JBRCriminalRecords({ values = {}, onChange }) {
                 <td><input type="text" name="offense" value={rec.offense} onChange={e => handleRecordChange(idx, e)} className="form-input" /></td>
                 <td><input type="text" name="court" value={rec.court} onChange={e => handleRecordChange(idx, e)} className="form-input" /></td>
                 <td><input type="text" name="sentence" value={rec.sentence} onChange={e => handleRecordChange(idx, e)} className="form-input" /></td>
-                <td><input type="text" name="dateArrested" value={rec.dateArrested} onChange={e => handleRecordChange(idx, e)} className="form-input" /></td>
-                <td><input type="text" name="dateRelease" value={rec.dateRelease} onChange={e => handleRecordChange(idx, e)} className="form-input" /></td>
+                <td><input type="date" name="dateArrested" value={rec.dateArrested} onChange={e => handleRecordChange(idx, e)} className="form-input" /></td>
+                <td><input type="date" name="dateRelease" value={rec.dateRelease} onChange={e => handleRecordChange(idx, e)} className="form-input" /></td>
                 <td><input type="text" name="authority" value={rec.authority} onChange={e => handleRecordChange(idx, e)} className="form-input" /></td>
                 <td>
                   {records.length > 1 && (

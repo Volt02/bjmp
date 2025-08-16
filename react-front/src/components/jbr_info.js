@@ -42,7 +42,22 @@ function JailBookingInfo({ values = {}, onChange }) {
         </div>
         <div>
           <label className="form-label">Telephone No/s</label>
-          <input type="text" name="telephone" value={formData.telephone || ''} onChange={handleInputChange} className="form-input" />
+          <input
+            type="text"
+            name="telephone"
+            value={formData.telephone || ''}
+            onChange={e => {
+              // Only allow up to 12 digits
+              let val = e.target.value.replace(/[^0-9]/g, '');
+              if (val.length > 12) val = val.slice(0, 12);
+              handleInputChange({ target: { name: 'telephone', value: val } });
+            }}
+            className="form-input"
+            inputMode="numeric"
+            pattern="[0-9]*"
+            maxLength={12}
+            placeholder="Up to 12 digits"
+          />
         </div>
         <div>
           <label className="form-label">Date of Birth</label>
